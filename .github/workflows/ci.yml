@@ -71,6 +71,11 @@ jobs:
           echo -e "YES\nYES" | ./setup.sh
           echo "/opt/fil/bin" >> $GITHUB_PATH
 
+      - name: Create user-config.jam
+        if: matrix.compiler
+        run: |
+          echo "using ${{matrix.toolset}} : : ${{matrix.compiler}} ;" > ~/user-config.jam
+
       - name: Setup Boost
         run: |
           echo GITHUB_REPOSITORY: $GITHUB_REPOSITORY
@@ -95,10 +100,10 @@ jobs:
           ./bootstrap.sh
           ./b2 -d0 headers
 
-      - name: Create user-config.jam
-        if: matrix.compiler
-        run: |
-          echo "using ${{matrix.toolset}} : : ${{matrix.compiler}} ;" > ~/user-config.jam
+      # - name: Create user-config.jam
+      #   if: matrix.compiler
+      #   run: |
+      #     echo "using ${{matrix.toolset}} : : ${{matrix.compiler}} ;" > ~/user-config.jam
 
       - name: Run tests
         run: |
