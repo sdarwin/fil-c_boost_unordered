@@ -102,11 +102,12 @@ jobs:
 
       - name: Run tests
         run: |
+          set -xe
           cd ../boost-root
           export ADDRMD=${{matrix.address-model}}
           export CFLAGS="${{matrix.cflags}}"
           export CXXFLAGS="${{matrix.cxxflags}}"
           export LINKFLAGS="${{matrix.linkflags}}"
-          ./b2 -j3 libs/$LIBRARY/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} ${ADDRMD:+address-model=$ADDRMD} ${CFLAGS:+cflags="$CFLAGS"} ${CXXFLAGS:+cxxflags="$CXXFLAGS"} ${LINKFLAGS:+linkflags="$LINKFLAGS"} variant=debug,release
+          ./b2 -d2 -j3 libs/$LIBRARY/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} ${ADDRMD:+address-model=$ADDRMD} ${CFLAGS:+cflags="$CFLAGS"} ${CXXFLAGS:+cxxflags="$CXXFLAGS"} ${LINKFLAGS:+linkflags="$LINKFLAGS"} variant=debug,release
 
 
